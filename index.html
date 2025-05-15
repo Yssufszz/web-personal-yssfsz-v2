@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Yssufsz</title>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+
+</head>
+<body>
+    <div class="loading-screen">
+        <div class="loading-animation">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <div class="loading-text">Loading Dulu Sabar</div>
+        <div class="loading-progress">0%</div>
+    </div>
+
+    <header>
+        <div class="logo">
+            <span class="logo-text">Yssufsz<span class="highlight">.</span></span>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#cv">CV</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HOME SECTION -->
+        <section id="home" class="section">
+            <div class="home-content">
+                <div class="greeting-container">
+                    <h2 class="greeting-text">Welcome Broku</h2>
+                    <h1 class="name">Saya <span class="highlight">Yusuf Simangunsong</span></h1>
+                    <p class="tagline">Creative Developer & Full Stack Developer</p>
+                    <div class="cta-buttons">
+                        <button class="primary-btn" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">
+                        Explore Yok
+                        </button>
+
+                        <button class="secondary-btn" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });">
+                        Kontak Saya nih
+                        </button>
+                    </div>
+                </div>
+                <div class="card-game-container">
+                    <div class="cards-wrapper">
+                        <div class="card">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <div class="card-pattern"></div>
+                                </div>
+                                <div class="card-back">
+                                    <div class="card-content">
+                                        <i class="fas fa-code"></i>
+                                        <h3>Web Development</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <div class="card-pattern"></div>
+                                </div>
+                                <div class="card-back">
+                                    <div class="card-content">
+                                        <i class="fas fa-paint-brush"></i>
+                                        <h3>UI/UX Design</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <div class="card-pattern"></div>
+                                </div>
+                                <div class="card-back">
+                                    <div class="card-content">
+                                        <i class="fas fa-mobile-alt"></i>
+                                        <h3>Fullstack Developer</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="game-instructions">
+                        <p>Buka kartunya aja</p>
+                    </div>
+                </div>
+            </div>
+            <div class="particles-container"></div>
+        </section>
+        <div id="robot3DContainer">
+            <div id="robotControlPanel">
+                <div class="slider-container">
+                    <label>Ganti aja Warna nya</label>
+                    <input type="range" id="colorSlider" min="0" max="360" value="240">
+                </div>
+                <div class="slider-container">
+                    <label>Cepetnya</label>
+                    <input type="range" id="speedSlider" min="0.5" max="3" step="0.1" value="1">
+                </div>
+                <button id="danceButton">Dance Heula Cil</button>
+            </div>
+            <div id="particleContainer"></div>
+        </div>
+        <section id="about" class="section">
+            <div class="section-header">
+                <h2>About <span class="highlight">Me</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="image-container">
+                        <img src="img/profile.jpg" alt="Profile Picture">
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="experience-badge">
+                        <span class="years">2+</span>
+                        <span class="text">Tahun<br>Pengalaman</span>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <p class="intro"> Yoo Halo Ges! Saya developer web yang suka ngulik-ngulik 
+                        program sama bikin tampilan UI yang mantep-mantep pokonyamah.
+                        Suka ngegame sama selalu cari janda eh maksudnya cari cara biar project makin mantap.</p>
+                    <p> Saya bisa di bilang bisa bikin website dan aplikasi yang nggak cuma enak dipandang,
+                        tapi juga nyaman dipake. Mau tampilan keren? Mau fitur yang mantap?, 
+                        semua insyaallah bisa gue sulap dari ide jadi kenyataan pake kode yang clean dan rapi. 
+                        dan ngasih pendapat solusi yang diluar nalar dari FrontEnd sampe ke-BackEnd.</p>
+                    <div class="personal-info">
+                        <div class="info-item">
+                            <span class="label">Nama:</span>
+                            <span class="value">Yusuf Simangunsong</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Email:</span>
+                            <span class="value">ysuf2303@gmail.com</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Phone:</span>
+                            <span class="value">+62-857-2349-4016</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Location:</span>
+                            <span class="value">Bandung, Indonesia</span>
+                        </div>
+                    </div>
+                    <div class="about-buttons">
+                        <a href="https://yssufszz.github.io/yssfsz-cv/" target="_blank" class="download-btn">
+                            <i class="fas fa-download"></i> Download CV
+                        </a>
+                        <button class="contact-btn" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });"><i class="fas fa-paper-plane"></i> Contact Me</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section id="services" class="section">
+            <div class="section-header">
+                <h2>My <span class="highlight">Services</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="services-content">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>Ngebuild atau ngebuat situs web yang responsif dan dinamis. Yang pasti user user-friendly lah ya, biar makin betah liat nya dan dapet experience tersendiri</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>UI/UX Design</h3>
+                    <p>Ngerancang tampilan yang gampang dipake dan bikin user betah liatnya, biar pengalaman mereka nggak cuma oke doang, tapi oke banget intinamah wkwk</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Development</h3>
+                    <p>Saya fokus ngembangin aplikasi Android native saja yang mulus, ringan, dan pastinya user-friendly. Pokonyamah aman buat user.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <h3>Bot Telegram & WA</h3>
+                    <p>Ngebuat bot interaktif untuk Telegram sama WhatsApp yang bisa bantu memperlancar proses otomatisasi dan meningkatkan efisiensi komunikasi.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Fullstack Developer</h3>
+                    <p>Bikin aplikasi dari depan ke belakang. Dari desain yang mantep sampe ke-server? boleh aja sini, semua saya urus biar semuanya lancar jaya.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-pencil-alt"></i>
+                    </div>
+                    <h3>Joki Tugas</h3>
+                    <p>Ga sempet ngerjain tugas? Sans, ada saya anjay siap bantu beresin tugas-tugas kuliah atau pekerjaan kamu, biar kamu fokus ke hal lain kalo sibuk.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills" class="section">
+            <div class="section-header">
+                <h2>My <span class="highlight">Skills</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-content">
+                <div class="skills-text">
+                    <p>Saya sudah ngembangin cukup banyak proyek menggunakan berbagai teknologi dan framework, sama masih terus belajar ningkatin keterampilan biar bisa ngasih solusi yang keren dan terkini. Ini beberapa keahlian teknis yang saya miliki:</p>
+                </div>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3>Frontend</h3>
+                        <div class="skill-items">
+                            <div class="skill-item" data-skill="HTML/CSS">
+                                <div class="skill-info">
+                                    <span class="skill-name">HTML/CSS</span>
+                                    <span class="skill-percentage">94%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 94%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="JavaScript">
+                                <div class="skill-info">
+                                    <span class="skill-name">JavaScript</span>
+                                    <span class="skill-percentage">87%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 87%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="React">
+                                <div class="skill-info">
+                                    <span class="skill-name">React</span>
+                                    <span class="skill-percentage">83%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 83%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Tailwind/Bootstrap">
+                                <div class="skill-info">
+                                    <span class="skill-name">Tailwind/Bootstrap</span>
+                                    <span class="skill-percentage">79%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 79%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Backend</h3>
+                        <div class="skill-items">
+                            <div class="skill-item" data-skill="Node.js">
+                                <div class="skill-info">
+                                    <span class="skill-name">Node.js</span>
+                                    <span class="skill-percentage">84%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 84%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="PHP">
+                                <div class="skill-info">
+                                    <span class="skill-name">PHP</span>
+                                    <span class="skill-percentage">76%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 76%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="SQL">
+                                <div class="skill-info">
+                                    <span class="skill-name">SQL</span>
+                                    <span class="skill-percentage">74%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 74%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Python">
+                                <div class="skill-info">
+                                    <span class="skill-name">Python</span>
+                                    <span class="skill-percentage">57%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 57%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Tools & Others</h3>
+                        <div class="skill-items">
+                            <div class="skill-item" data-skill="VS Code">
+                                <div class="skill-info">
+                                    <span class="skill-name">VS Code</span>
+                                    <span class="skill-percentage">94%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 94%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Git">
+                                <div class="skill-info">
+                                    <span class="skill-name">Git</span>
+                                    <span class="skill-percentage">86%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 86%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Figma">
+                                <div class="skill-info">
+                                    <span class="skill-name">Figma</span>
+                                    <span class="skill-percentage">78%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 78%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item" data-skill="Docker">
+                                <div class="skill-info">
+                                    <span class="skill-name">Docker</span>
+                                    <span class="skill-percentage">47%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" style="width: 47%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PORTFOLIO SECTION -->
+        <section id="portfolio" class="section">
+            <div class="section-header">
+                <h2>My <span class="highlight">Portfolio</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="mobile">Mobile</button>
+                <button class="filter-btn" data-filter="game">Game</button>
+                <button class="filter-btn" data-filter="bot">Bot</button>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-img">
+                        <img src="img/project/2.png" alt="E-commerce Website">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Pembukuan Juragan Baro</h3>
+                            <p>Web Development</p>
+                            <a href="http://juraganbaro.my.id/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="bot">
+                    <div class="portfolio-img">
+                        <img src="img/project/4.png" alt="Dashboard">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Bot Cari Lagu </h3>
+                            <p>Bot Telegram</p>
+                            <a href="https://t.me/carilagudarilirik_bot" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>        
+                <div class="portfolio-item" data-category="web game">
+                    <div class="portfolio-img">
+                        <img src="img/project/7.png" alt="Card Flip Memory Game">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Card Flip Memory Game</h3>
+                            <p>Web Development/Game</p>
+                            <a href="#" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-img">
+                        <img src="img/project/3.png" alt="Brand Identity">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Login/Register Dekstop Only</h3>
+                            <p>Web Development</p>
+                            <a href="https://yssufszz.github.io/login-register-ysfsz/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>        
+                <div class="portfolio-item" data-category="web game">
+                    <div class="portfolio-img">
+                        <img src="img/project/9.png" alt="JavaScript Game">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>JavaScript Function Game</h3>
+                            <p>Web Development/Game</p>
+                            <a href="https://jsfunctiongame.vercel.app/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-img">
+                        <img src="img/project/5.png" alt="App Design">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>QR Code Generator</h3>
+                            <p>Web Development</p>
+                            <a href="https://qrlogoy.netlify.app/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-img">
+                        <img src="img/project/10.png" alt="Kalkulator">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Kalkulator Modern UI</h3>
+                            <p>Web Development</p>
+                            <a href="https://kalkulatory-cyan.vercel.app/" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="web">
+                    <div class="portfolio-img">
+                        <img src="img/project/6.png" alt="Food Delivery App">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Kartu Nama Generator Mobile Only</h3>
+                            <p>Web Development</p>
+                            <a href="https://kartunamadigital.vercel.app" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="mobile">
+                    <div class="portfolio-img">
+                        <img src="img/project/1.png" alt="Vibny App">
+                    </div>
+                    <div class="portfolio-overlay">
+                        <div class="portfolio-info">
+                            <h3>Vibny (On Progress)</h3>
+                            <p>Mobile Development</p>
+                            <a href="#" class="portfolio-link"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="solar-system-project">
+                <h3>Sistem Tata Surya 3D Interaktif</h3>
+                <p>Gas coba model tata surya 3D saya yang bisa kamu klik-klik, kalo di mobile kepotong bisa coba mode desktop ya hehe, masi banyak kurangnya sih hehe.</p>
+                <div class="solar-system-container" id="solar-system"></div>
+                <div class="planet-info">
+                    <h4>Info Planet</h4>
+                    <div id="planet-details">Klik planetnya buat tau info seru!</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CV SECTION -->
+        <section id="cv" class="section">
+            <div class="section-header">
+                <h2>My <span class="highlight">Resume</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="cv-download">
+                <p>Unduh resume lengkap saya untuk tau  detail lebih lanjut tentang pengalaman dan kualifikasi saya.</p>
+                <button class="download-cv-btn" onclick="window.open('https://yssufszz.github.io/yssfsz-cv/', '_blank')">
+                    <i class="fas fa-file-download"></i> Download CV
+                </button>
+
+            </div>
+            <div class="cv-content">
+                <div class="cv-section">
+                    <h3 class="cv-section-title"><i class="fas fa-graduation-cap"></i> Pendidikan</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">2019 - 2022</div>
+                            <div class="timeline-content">
+                                <h4>Teknik Komputer Jaringan</h4>
+                                <p class="timeline-institution">SMK Pasundan 2 Banjaran</p>
+                                <p>Fokus pada hardware komputer dan jaringan, mempelajari networking, troubleshooting dan perakitan komponen</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cv-section">
+                    <h3 class="cv-section-title"><i class="fas fa-briefcase"></i> Work Experience</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">2023 - Sekarang</div>
+                            <div class="timeline-content">
+                                <h4>Freelancer</h4>
+                                <p class="timeline-institution">-</p>
+                                <p>Membuat Website dan aplikasi (Fullstack Dev), sesuai permintaan client dan user-friendly, serta Joki tugas.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-date">2020 - 2020</div>
+                            <div class="timeline-content">
+                                <h4>Teknisi</h4>
+                                <p class="timeline-institution">CN Computer</p>
+                                <p>Merakit Komputer, install OS, troubleshooting, memperbaiki komputer blank, reparasi komputer dan laptop.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cv-section">
+                    <h3 class="cv-section-title"><i class="fas fa-certificate"></i> Certifications</h3>
+                    <div class="certificates">
+                        <div class="certificate">
+                            <i class="fas fa-award"></i>
+                            <div class="certificate-content">
+                                <h4>MTCNA</h4>
+                                <p>Mikrotik, 2022</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="section">
+            <div class="section-header">
+                <h2>Contact <span class="highlight">Me</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Location</h3>
+                            <p>Bandung, Indonesia</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>ysuf2303@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Phone</h3>
+                            <p>+62-857-2349-4016</p>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/yusuf-s-004752258/" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/Yssufszz" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="https://wa.me/625723494016" class="social-link"> <i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/yssufsz/" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                            <label for="name">Your Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                            <label for="email">Your Email</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                            <label for="subject">Subject</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                            <label for="message">Your Message</label>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-text">Send Message</span>
+                            <span class="btn-icon"><i class="fas fa-paper-plane"></i></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-text">Yssufsz<span class="highlight">.</span></span>
+            </div>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#skills">Skills</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#cv">CV</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/yusuf-s-004752258/" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Yssufszz" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="https://wa.me/625723494016" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/yssufsz/" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Yusuf Simangunsong. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
