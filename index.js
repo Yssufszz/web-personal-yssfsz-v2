@@ -321,11 +321,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const solarSystemContainer = document.getElementById('solar-system');
     if (hasThreeJs && solarSystemContainer) {
         try {
-            // Scene setup
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, solarSystemContainer.clientWidth / 500, 0.1, 1000);
             
-            // Create stars background
             const starGeometry = new THREE.BufferGeometry();
             const starMaterial = new THREE.PointsMaterial({
                 color: 0xffffff,
@@ -344,7 +342,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const stars = new THREE.Points(starGeometry, starMaterial);
             scene.add(stars);
             
-            // Renderer setup
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(solarSystemContainer.clientWidth, 500);
             renderer.setClearColor(0x000000, 1);
@@ -352,12 +349,11 @@ document.addEventListener("DOMContentLoaded", () => {
             renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             solarSystemContainer.appendChild(renderer.domElement);
 
-            // Create sun
             const sunGeometry = new THREE.SphereGeometry(3, 64, 64);
             const textureLoader = new THREE.TextureLoader();
             
-            // Planet textures
             const textures = {
+                // tinggal nyari texture yang sesuai aja ni
                 sun: 'https://i.ibb.co/FgPG2JQ/sun.jpg',
                 mercury: 'https://i.ibb.co/Xspz9xn/mercury.jpg',
                 venus: 'https://i.ibb.co/nMXpF2J/venus.jpg',
@@ -369,7 +365,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 neptune: 'https://i.ibb.co/dLJr9yC/neptune.jpg',
             };
             
-            // Try to load sun texture
             let sunTexture;
             try {
                 sunTexture = textureLoader.load(textures.sun);
@@ -378,7 +373,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 sunTexture = null;
             }
             
-            // Sun material with emission
             const sunMaterial = new THREE.MeshBasicMaterial({
                 map: sunTexture || null,
                 color: sunTexture ? 0xffffff : 0xffcc33,
@@ -389,7 +383,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const sun = new THREE.Mesh(sunGeometry, sunMaterial);
             scene.add(sun);
             
-            // Add sun glow effect
             const sunGlowGeometry = new THREE.SphereGeometry(3.2, 32, 32);
             const sunGlowMaterial = new THREE.ShaderMaterial({
                 uniforms: {
@@ -425,7 +418,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const sunGlow = new THREE.Mesh(sunGlowGeometry, sunGlowMaterial);
             scene.add(sunGlow);
 
-            // Enhanced planet info with more details and realistic data
             const planetInfo = [
                 { 
                     name: "Merkurius", 
@@ -500,13 +492,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     orbitSpeed: 0.04
                 }
             ];
-            
+
             const planets = [];
             const planetDetails = document.getElementById('planet-details');
             const orbits = [];
             const planetLabels = [];
             
-            // Create ring geometry for Saturn
             const createRing = (innerRadius, outerRadius) => {
                 const ringGeometry = new THREE.RingGeometry(innerRadius, outerRadius, 64);
                 const ringMaterial = new THREE.MeshLambertMaterial({
@@ -520,7 +511,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return ring;
             };
             
-            // Create orbit lines
             planetInfo.forEach((info, i) => {
                 const orbitRadius = info.orbitRadius;
                 const orbitGeometry = new THREE.RingGeometry(orbitRadius - 0.02, orbitRadius + 0.02, 128);
@@ -536,7 +526,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 orbits.push(orbit);
             });
             
-            // Create planets
             planetInfo.forEach((info, i) => {
                 const planetGeometry = new THREE.SphereGeometry(info.size * 0.4, 32, 32);
                 
@@ -573,7 +562,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     planet.add(saturnRing);
                 }
                 
-                // Create label for planet
                 const planetLabel = document.createElement('div');
                 planetLabel.className = 'planet-label';
                 planetLabel.textContent = info.name;
@@ -582,7 +570,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 planetLabels.push(planetLabel);
             });
 
-            // Lighting
             const ambientLight = new THREE.AmbientLight(0x333333);
             scene.add(ambientLight);
             
@@ -591,19 +578,16 @@ document.addEventListener("DOMContentLoaded", () => {
             light.castShadow = true;
             scene.add(light);
 
-            // Camera position setup
             camera.position.z = 40;
             camera.position.y = 20;
             camera.lookAt(0, 0, 0);
 
-            // Control variables
             let isRotating = true;
             let rotationSpeed = 0.001;
             let isDragging = false;
             let previousMousePosition = { x: 0, y: 0 };
             let cameraDistance = 40;
             
-            // Control panel
             const controlsDiv = document.createElement('div');
             controlsDiv.className = 'solar-controls';
             controlsDiv.innerHTML = `
@@ -617,7 +601,6 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             solarSystemContainer.appendChild(controlsDiv);
             
-            // Control event listeners
             document.getElementById('pause-rotation').addEventListener('click', (e) => {
                 isRotating = !isRotating;
                 e.target.innerHTML = isRotating ? 
@@ -640,7 +623,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 cameraDistance = 40;
             });
 
-            // Mouse drag controls for camera movement
             renderer.domElement.addEventListener('mousedown', (e) => {
                 isDragging = true;
                 previousMousePosition = {
@@ -688,13 +670,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
             
-            // Zoom with mouse wheel
             renderer.domElement.addEventListener('wheel', (e) => {
                 e.preventDefault();
                 
                 cameraDistance += e.deltaY * 0.05;
                 
-                // Limit zoom range
                 cameraDistance = Math.max(10, Math.min(cameraDistance, 400));
                 
                 const direction = new THREE.Vector3(
@@ -710,19 +690,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             });
             
-            // Helper function to convert degrees to radians
             function toRadians(degrees) {
                 return degrees * (Math.PI / 180);
             }
 
-            // Animation loop
             function animate() {
                 requestAnimationFrame(animate);
                 
-                // Update sun rotation
                 sun.rotation.y += 0.002;
                 
-                // Update planet positions and rotations
                 if (isRotating) {
                     planets.forEach((planet, index) => {
                         const info = planet.userData.info;
@@ -736,7 +712,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
                 
-                // Update planets' label positions
                 planets.forEach((planet, index) => {
                     const position = planet.position.clone();
                     position.project(camera);
@@ -755,10 +730,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
                 
-                // Slowly rotate stars
                 stars.rotation.y += 0.0001;
                 
-                // Update sunGlow shader
                 sunGlow.material.uniforms.viewVector.value = new THREE.Vector3().subVectors(
                     camera.position,
                     sunGlow.position
@@ -767,15 +740,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 renderer.render(scene, camera);
             }
 
-            // Start animation
             animate();
 
-            // Raycaster for planet selection
             const raycaster = new THREE.Raycaster();
             const mouse = new THREE.Vector2();
             
             renderer.domElement.addEventListener('click', (e) => {
-                if (isDragging) return; // Don't select when dragging
+                if (isDragging) return; 
                 
                 const rect = renderer.domElement.getBoundingClientRect();
                 mouse.x = ((e.clientX - rect.left) / renderer.domElement.clientWidth) * 2 - 1;
@@ -797,7 +768,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         gsap.to(planetDetails, { opacity: 1, duration: 0.3 });
                     }});
                     
-                    // Focus camera on selected planet
                     const planetPos = selectedPlanet.position.clone();
                     const distToTarget = camera.position.distanceTo(planetPos);
                     
@@ -818,8 +788,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
             });
-
-            // Handle window resizing
             window.addEventListener('resize', () => {
                 const newWidth = solarSystemContainer.clientWidth;
                 camera.aspect = newWidth / 500;
