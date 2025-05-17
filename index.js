@@ -321,9 +321,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const solarSystemContainer = document.getElementById('solar-system');
     if (hasThreeJs && solarSystemContainer) {
         try {
+            // Scene setup
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, solarSystemContainer.clientWidth / 500, 0.1, 1000);
             
+            // Create stars background
             const starGeometry = new THREE.BufferGeometry();
             const starMaterial = new THREE.PointsMaterial({
                 color: 0xffffff,
@@ -342,88 +344,243 @@ document.addEventListener("DOMContentLoaded", () => {
             const stars = new THREE.Points(starGeometry, starMaterial);
             scene.add(stars);
             
+            // Renderer setup
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(solarSystemContainer.clientWidth, 500);
-            renderer.setClearColor(0x000000, 0);
+            renderer.setClearColor(0x000000, 1);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             solarSystemContainer.appendChild(renderer.domElement);
 
-            const sunGeometry = new THREE.SphereGeometry(3, 32, 32);
+            // Create sun
+            const sunGeometry = new THREE.SphereGeometry(3, 64, 64);
             const textureLoader = new THREE.TextureLoader();
             
+            // Planet textures
+            const textures = {
+                sun: '/api/placeholder/200/200',
+                mercury: '/api/placeholder/200/200',
+                venus: '/api/placeholder/200/200',
+                earth: '/api/placeholder/200/200',
+                mars: '/api/placeholder/200/200',
+                jupiter: '/api/placeholder/200/200',
+                saturn: '/api/placeholder/200/200',
+                uranus: '/api/placeholder/200/200',
+                neptune: '/api/placeholder/200/200',
+            };
+            
+            // Try to load sun texture
             let sunTexture;
             try {
-                sunTexture = textureLoader.load('https://images.pexels.com/photos/87611/sun-solar-flare-sunlight-flare-87611.jpeg');
+                sunTexture = textureLoader.load(textures.sun);
             } catch (error) {
                 console.error("Failed to load sun texture:", error);
                 sunTexture = null;
             }
             
-            const sunMaterial = sunTexture ? 
-                new THREE.MeshBasicMaterial({ map: sunTexture }) : 
-                new THREE.MeshBasicMaterial({ color: 0xffcc00 });
-                
+            // Sun material
+            const sunMaterial = new THREE.MeshBasicMaterial({
+                map: sunTexture || null,
+                color: sunTexture ? 0xffffff : 0xffcc33
+            });
+                    
             const sun = new THREE.Mesh(sunGeometry, sunMaterial);
             scene.add(sun);
             
-            const sunGlow = new THREE.Mesh(
-                new THREE.SphereGeometry(3.2, 32, 32),
-                new THREE.MeshBasicMaterial({
-                    color: 0xffcc00,
-                    transparent: true,
-                    opacity: 0.5
-                })
-            );
+            // Add sun glow effect
+            const sunGlowGeometry = new THREE.SphereGeometry(3.2, 32, 32);
+            const sunGlowMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffaa00,
+                transparent: true,
+                opacity: 0.3
+            });
+
+            const sunGlow = new THREE.Mesh(sunGlowGeometry, sunGlowMaterial);
             scene.add(sunGlow);
 
+            // Enhanced planet info with more details and realistic data
             const planetInfo = [
-                { name: "Merkurius", description: "Planet terkecil dan terdekat dari Matahari, punya permukaan berbatu dan suhu ekstrem.", color: 0x888888 },
-                { name: "Venus", description: "Kembaran Bumi dalam ukuran, tapi atmosfernya panas banget dan beracun karena penuh karbon dioksida.", color: 0xffaa77 },
-                { name: "Bumi", description: "Tempat kita tinggal ini, Satu-satunya planet yang diketahui mendukung kehidupan, dengan air, oksigen, dan atmosfer yang seimbang.", color: 0x0077ff },
-                { name: "Mars", description: "Disebut 'Planet Merah' karena permukaannya penuh debu besi, punya gunung tertinggi dan sedang diteliti untuk kemungkinan tempat tinggal manusia.", color: 0xff4444 }
+                { 
+                    name: "Merkurius", 
+                    description: "Planet terkecil dan terdekat dari Matahari dengan permukaan berbatu. Suhunya bisa mencapai 430°C saat siang dan -180°C saat malam. Satu hari di Merkurius sama dengan 176 hari di Bumi.", 
+                    color: 0x888888,
+                    size: 0.38,
+                    texture: textures.mercury,
+                    orbitRadius: 5,
+                    orbitSpeed: 0.8
+                },
+                { 
+                    name: "Venus", 
+                    description: "Planet terpanas di tata surya dengan atmosfer tebal beracun yang sebagian besar terdiri dari karbon dioksida. Efek rumah kaca menyebabkan suhu permukaan mencapai 470°C, lebih panas dari Merkurius!", 
+                    color: 0xffaa77,
+                    size: 0.95,
+                    texture: textures.venus,
+                    orbitRadius: 7,
+                    orbitSpeed: 0.6
+                },
+                { 
+                    name: "Bumi", 
+                    description: "Satu-satunya planet yang diketahui mendukung kehidupan. 71% permukaannya tertutup air, punya satu satelit alami (Bulan), dan lapisan atmosfer yang melindungi dari radiasi berbahaya.", 
+                    color: 0x0077ff,
+                    size: 1,
+                    texture: textures.earth,
+                    orbitRadius: 10,
+                    orbitSpeed: 0.5
+                },
+                { 
+                    name: "Mars", 
+                    description: "Planet merah dengan permukaan kering berbatu. Memiliki gunung tertinggi di tata surya (Olympus Mons) dan sedang diteliti untuk kemungkinan kolonisasi manusia di masa depan.", 
+                    color: 0xff4444,
+                    size: 0.53,
+                    texture: textures.mars,
+                    orbitRadius: 15,
+                    orbitSpeed: 0.4
+                },
+                { 
+                    name: "Jupiter", 
+                    description: "Planet terbesar di tata surya dan merupakan gas raksasa. Memiliki lebih dari 79 bulan dan badai besar yang dikenal sebagai Bintik Merah Besar yang sudah berlangsung ratusan tahun.", 
+                    color: 0xffcc99,
+                    size: 11.2,
+                    texture: textures.jupiter,
+                    orbitRadius: 50,
+                    orbitSpeed: 0.2
+                },
+                { 
+                    name: "Saturnus", 
+                    description: "Terkenal dengan sistem cincinnya yang indah terbuat dari partikel es dan debu. Saturnus adalah planet kedua terbesar di tata surya dan memiliki setidaknya 82 bulan.", 
+                    color: 0xeecc99,
+                    size: 9.45,
+                    texture: textures.saturn,
+                    orbitRadius: 90,
+                    orbitSpeed: 0.1
+                },
+                { 
+                    name: "Uranus", 
+                    description: "Planet es raksasa yang unik karena berotasi dengan kemiringan hampir 90 derajat, seperti berguling di orbitnya. Memiliki 27 bulan dan atmosfer terdiri dari hidrogen, helium, dan metana.", 
+                    color: 0x99ccff,
+                    size: 4.0,
+                    texture: textures.uranus,
+                    orbitRadius: 180,
+                    orbitSpeed: 0.05
+                },
+                { 
+                    name: "Neptunus", 
+                    description: "Planet paling jauh dari Matahari, sangat dingin dengan suhu -214°C. Memiliki angin paling kencang di tata surya yang bisa mencapai 2.100 km/jam dan 14 bulan yang diketahui.", 
+                    color: 0x3377ff,
+                    size: 3.88,
+                    texture: textures.neptune,
+                    orbitRadius: 280,
+                    orbitSpeed: 0.04
+                }
             ];
 
+            // Create planets and their orbits
             const planets = [];
             const planetDetails = document.getElementById('planet-details');
             const orbits = [];
+            const planetLabels = [];
             
-            for (let i = 0; i < 4; i++) {
-                const orbitRadius = (i + 1) * 5;
-                const orbitGeometry = new THREE.RingGeometry(orbitRadius - 0.02, orbitRadius + 0.02, 64);
+            // Create ring geometry for Saturn
+            const createRing = (innerRadius, outerRadius) => {
+                const ringGeometry = new THREE.RingGeometry(innerRadius, outerRadius, 64);
+                const ringMaterial = new THREE.MeshLambertMaterial({
+                    color: 0xeecc99,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.rotation.x = Math.PI / 2;
+                return ring;
+            };
+            
+            // Create orbit lines
+            planetInfo.forEach((info, i) => {
+                const orbitRadius = info.orbitRadius;
+                const orbitGeometry = new THREE.RingGeometry(orbitRadius - 0.02, orbitRadius + 0.02, 128);
                 const orbitMaterial = new THREE.MeshBasicMaterial({ 
                     color: 0xffffff, 
                     side: THREE.DoubleSide,
                     transparent: true,
-                    opacity: 0.2
+                    opacity: 0.1
                 });
                 const orbit = new THREE.Mesh(orbitGeometry, orbitMaterial);
                 orbit.rotation.x = Math.PI / 2;
                 scene.add(orbit);
                 orbits.push(orbit);
+            });
+            
+            // Create planets
+            planetInfo.forEach((info, i) => {
+                const planetGeometry = new THREE.SphereGeometry(info.size * 0.4, 32, 32);
                 
-                const planetGeometry = new THREE.SphereGeometry(0.6, 32, 32);
+                let planetTexture;
+                try {
+                    planetTexture = textureLoader.load(info.texture);
+                } catch (error) {
+                    console.error(`Failed to load texture for ${info.name}:`, error);
+                    planetTexture = null;
+                }
+                
                 const planetMaterial = new THREE.MeshStandardMaterial({ 
-                    color: planetInfo[i].color,
+                    map: planetTexture,
+                    color: planetTexture ? 0xffffff : info.color,
                     roughness: 0.7,
                     metalness: 0.2
                 });
+                
                 const planet = new THREE.Mesh(planetGeometry, planetMaterial);
-                planet.userData = { info: planetInfo[i] };
+                planet.castShadow = true;
+                planet.receiveShadow = true;
+                planet.userData = { info: info };
+                
+                // Initial position
+                const angle = Math.random() * Math.PI * 2;
+                planet.position.x = Math.cos(angle) * info.orbitRadius;
+                planet.position.z = Math.sin(angle) * info.orbitRadius;
+                
                 planets.push(planet);
                 scene.add(planet);
-            }
+                
+                // Add Saturn's rings
+                if (info.name === "Saturnus") {
+                    const innerRadius = info.size * 0.5;
+                    const outerRadius = info.size * 0.9;
+                    const saturnRing = createRing(innerRadius, outerRadius);
+                    planet.add(saturnRing);
+                }
+                
+                // Create label for planet
+                const planetLabel = document.createElement('div');
+                planetLabel.className = 'planet-label';
+                planetLabel.textContent = info.name;
+                planetLabel.style.display = 'none';
+                solarSystemContainer.appendChild(planetLabel);
+                planetLabels.push(planetLabel);
+            });
 
+            // Lighting
             const ambientLight = new THREE.AmbientLight(0x333333);
             scene.add(ambientLight);
             
-            const light = new THREE.PointLight(0xffffff, 2);
+            const light = new THREE.PointLight(0xffffff, 1.5, 1000);
             light.position.set(0, 0, 0);
+            light.castShadow = true;
             scene.add(light);
 
-            camera.position.z = 22;
+            // Camera position setup
+            camera.position.z = 40;
+            camera.position.y = 20;
+            camera.lookAt(0, 0, 0);
 
+            // Control variables
             let isRotating = true;
             let rotationSpeed = 0.001;
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+            let cameraDistance = 40;
             
+            // Control panel
             const controlsDiv = document.createElement('div');
             controlsDiv.className = 'solar-controls';
             controlsDiv.innerHTML = `
@@ -437,6 +594,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
             solarSystemContainer.appendChild(controlsDiv);
             
+            // Control event listeners
             document.getElementById('pause-rotation').addEventListener('click', (e) => {
                 isRotating = !isRotating;
                 e.target.innerHTML = isRotating ? 
@@ -449,39 +607,150 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             
             document.getElementById('reset-view').addEventListener('click', () => {
-                camera.position.set(0, 0, 22);
-                camera.lookAt(0, 0, 0);
+                gsap.to(camera.position, {
+                    x: 0,
+                    y: 20,
+                    z: 40,
+                    duration: 1,
+                    onUpdate: () => camera.lookAt(0, 0, 0)
+                });
+                cameraDistance = 40;
             });
 
+            // Mouse drag controls for camera movement
+            renderer.domElement.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = {
+                    x: e.clientX,
+                    y: e.clientY
+                };
+            });
+            
+            renderer.domElement.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+            
+            renderer.domElement.addEventListener('mouseleave', () => {
+                isDragging = false;
+            });
+            
+            renderer.domElement.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const deltaMove = {
+                        x: e.clientX - previousMousePosition.x,
+                        y: e.clientY - previousMousePosition.y
+                    };
+                    
+                    const deltaRotationQuaternion = new THREE.Quaternion()
+                        .setFromEuler(new THREE.Euler(
+                            toRadians(deltaMove.y * 0.5),
+                            toRadians(deltaMove.x * 0.5),
+                            0,
+                            'XYZ'
+                        ));
+                    
+                    const distance = Math.sqrt(
+                        camera.position.x * camera.position.x +
+                        camera.position.y * camera.position.y +
+                        camera.position.z * camera.position.z
+                    );
+                    
+                    camera.position.applyQuaternion(deltaRotationQuaternion);
+                    camera.lookAt(0, 0, 0);
+                    
+                    previousMousePosition = {
+                        x: e.clientX,
+                        y: e.clientY
+                    };
+                }
+            });
+            
+            // Zoom with mouse wheel
+            renderer.domElement.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                
+                cameraDistance += e.deltaY * 0.05;
+                
+                // Limit zoom range
+                cameraDistance = Math.max(10, Math.min(cameraDistance, 400));
+                
+                const direction = new THREE.Vector3(
+                    camera.position.x,
+                    camera.position.y,
+                    camera.position.z
+                ).normalize();
+                
+                camera.position.set(
+                    direction.x * cameraDistance,
+                    direction.y * cameraDistance,
+                    direction.z * cameraDistance
+                );
+            });
+            
+            // Helper function to convert degrees to radians
+            function toRadians(degrees) {
+                return degrees * (Math.PI / 180);
+            }
+
+            // Animation loop
             function animate() {
                 requestAnimationFrame(animate);
                 
+                // Update sun rotation
                 sun.rotation.y += 0.002;
-                sunGlow.rotation.y -= 0.001;
                 
+                // Update planet positions and rotations
                 if (isRotating) {
                     planets.forEach((planet, index) => {
-                        const orbitRadius = (index + 1) * 5;
-                        const angle = Date.now() * rotationSpeed * (1 / (index + 1));
+                        const info = planet.userData.info;
+                        const orbitRadius = info.orbitRadius;
+                        const angle = Date.now() * rotationSpeed * info.orbitSpeed;
                         
                         planet.position.x = Math.cos(angle) * orbitRadius;
                         planet.position.z = Math.sin(angle) * orbitRadius;
                         
-                        planet.rotation.y += 0.01 + (index * 0.002);
+                        planet.rotation.y += 0.01 + (0.005 * index);
                     });
                 }
                 
+                // Update planets' label positions
+                planets.forEach((planet, index) => {
+                    const position = planet.position.clone();
+                    position.project(camera);
+                    
+                    const x = (position.x * 0.5 + 0.5) * solarSystemContainer.clientWidth;
+                    const y = (-position.y * 0.5 + 0.5) * 500;
+                    
+                    if (planetLabels[index]) {
+                        if (position.z < 1) {
+                            planetLabels[index].style.display = 'block';
+                            planetLabels[index].style.left = `${x}px`;
+                            planetLabels[index].style.top = `${y - 20}px`;
+                        } else {
+                            planetLabels[index].style.display = 'none';
+                        }
+                    }
+                });
+                
+                // Slowly rotate stars
                 stars.rotation.y += 0.0001;
+                
+                // Update sunGlow shader
+                sunGlow.rotation.y += 0.003;
                 
                 renderer.render(scene, camera);
             }
 
+            // Start animation
             animate();
 
+            // Raycaster for planet selection
             const raycaster = new THREE.Raycaster();
             const mouse = new THREE.Vector2();
             
             renderer.domElement.addEventListener('click', (e) => {
+                if (isDragging) return; // Don't select when dragging
+                
                 const rect = renderer.domElement.getBoundingClientRect();
                 mouse.x = ((e.clientX - rect.left) / renderer.domElement.clientWidth) * 2 - 1;
                 mouse.y = -((e.clientY - rect.top) / renderer.domElement.clientHeight) * 2 + 1;
@@ -502,6 +771,18 @@ document.addEventListener("DOMContentLoaded", () => {
                         gsap.to(planetDetails, { opacity: 1, duration: 0.3 });
                     }});
                     
+                    // Focus camera on selected planet
+                    const planetPos = selectedPlanet.position.clone();
+                    const distToTarget = camera.position.distanceTo(planetPos);
+                    
+                    gsap.to(camera.position, {
+                        x: planetPos.x + (distToTarget * 0.2),
+                        y: camera.position.y,
+                        z: planetPos.z + (distToTarget * 0.2),
+                        duration: 1,
+                        onUpdate: () => camera.lookAt(planetPos)
+                    });
+                    
                     gsap.to(selectedPlanet.scale, { x: 1.2, y: 1.2, z: 1.2, duration: 0.3 });
                     
                     planets.forEach(p => {
@@ -512,12 +793,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
+            // Handle window resizing
             window.addEventListener('resize', () => {
                 const newWidth = solarSystemContainer.clientWidth;
                 camera.aspect = newWidth / 500;
                 camera.updateProjectionMatrix();
                 renderer.setSize(newWidth, 500);
             });
+            
         } catch (error) {
             console.error("Error initializing solar system:", error);
             solarSystemContainer.innerHTML = '<div class="error-message">Failed to load solar system. Please refresh the page or check console for errors.</div>';
