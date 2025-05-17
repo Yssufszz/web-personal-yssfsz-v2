@@ -1311,32 +1311,139 @@ document.addEventListener("DOMContentLoaded", () => {
     const sendBtn = document.querySelector('.send-btn');
     const messagesContainer = document.querySelector('.chat-bot-messages');
     const quickButtons = document.querySelectorAll('.quick-btn');
-    
+
     const botResponses = {
-        default: "Hmm, maaf aku belum ngerti maksudnya. Bisa dijelasin lagi nggak? 😊",
-        greeting: [
-            "Haii! 👋 Gimana kabarnya hari ini?",
-            "Halo! Ada yang bisa aku bantuin?",
-            "Wah, seneng banget kamu mampir! 😄"
+        default: [
+            "Hmm, Shey belum ngerti maksudnya nih. Bisa dijelasin lagi nggak? Shey pengen banget bantuin kamu~ 😊",
+            "Waduh, Shey masih bingung sama maksud kamu. Coba jelasin dengan kata-kata yang lebih sederhana dong~ Shey penasaran!",
+            "Maaf ya, Shey belum bisa nangkep maksud kamu. Mungkin kamu bisa tanya dengan cara lain? Shey siap bantu kok! 💫",
+            "Duh, Shey jadi bingung nih. Coba kasih tau Shey lebih detail lagi ya supaya Shey bisa bantu kamu dengan tepat! 🤔"
         ],
-        services: "Aku bisa bantu bikin website, desain UI/UX, aplikasi mobile, bot Telegram & WA, dan lainnya. Mau ngobrolin yang mana dulu nih?",
-        pricing: "Soal harga fleksibel kok, tergantung kebutuhan kamu. Kalau mau detail, boleh banget chat aku langsung di WA yaa~",
-        contact: "Kamu bisa hubungi aku lewat email: ysuf2303@gmail.com atau WA: +62-857-2349-4016. Feel free buat nanya-nanya aja dulu ya!",
-        skills: "Aku biasa ngoding pake HTML/CSS, JavaScript, React, Node.js, PHP, SQL, dan tools kayak Git, Figma, VS Code, dll.",
-        portfolio: "Langsung cek aja di halaman *Portfolio*, di situ ada beberapa karya dan project yang udah aku kerjain.",
-        about: "Aku fullstack dev dari Bandung, udah ngoding-ngodingan lebih dari 2 tahun. Fokusku bikin web/aplikasi yang kece dan gampang dipake!"
+        greeting: [
+            "Haii! 👋 Ketemu lagi sama Shey! Gimana kabarnya hari ini?",
+            "Halo! Shey di sini~ Ada yang Shey bisa bantu nggak?",
+            "Wah, seneng banget kamu mampir ke chat Shey! 😄 Mau ngobrol apa nih?",
+            "Heyy! Shey kangen nih sama kamu! Udah lama gak ngobrol. Ada yang bisa Shey bantuin? ✨",
+            "Slamat datang! Shey udah nungguin dari tadi lho~ Mau tanya-tanya soal apa nih sama Shey? 🌸"
+        ],
+        services: [
+            "Shey bisa bantu kamu buat dapetin jasa dari Yusuf loh! Mulai dari bikin website keren, desain UI/UX yang eye-catching, aplikasi mobile, bot Telegram & WA, dan masih banyak lagi! Mau bahas yang mana dulu nih?",
+            "Yusuf tuh bisa ngerjain banyak hal keren! Mulai dari website yang aesthetic, aplikasi mobile yang smooth, sampe bot AI kayak Shey! Pengen tau lebih detail tentang yang mana dulu nih? 🚀",
+            "Jasa dari Yusuf yang bisa kamu dapetin tuh lengkap banget! Website? Bisa! Mobile app? Jago! Bot pintar? Udah pasti! Pengen explore yang mana dulu nih? Shey siap jelasin~ 💼"
+        ],
+        pricing: [
+            "Soal harga Yusuf ngasih yang fleksibel banget kok, tergantung kebutuhan kamu pastinya. Kalau mau tau lebih detail, chat langsung aja ke WA Yusuf yaa~ Shey bakal ngasih kontaknya di bawah!",
+            "Untuk harga, Yusuf selalu ngasih yang worth it banget! Tergantung scope project dan kompleksitasnya sih. Kalau penasaran, Shey saranin kamu langsung chat Yusuf aja di nomor yang Shey share ya! 💰",
+            "Harga dari Yusuf tuh bersahabat banget loh! Sesuai sama kebutuhan dan keinginan kamu. Mau lebih detail? Chat langsung ke Yusuf ya, Shey share kontak WA-nya nih: +62-857-2349-4016 📱"
+        ],
+        contact: [
+            "Kamu bisa hubungi Yusuf lewat email: ysuf2303@gmail.com atau WA: +62-857-2349-4016. Feel free buat nanya-nanya dulu ke Yusuf! Shey jamin Yusuf ramah banget~",
+            "Kalau mau diskusi langsung sama Yusuf, bisa banget coba kontak via WA: +62-857-2349-4016 atau email ke ysuf2303@gmail.com. Yusuf fast response kok! Shey udah confirm sendiri~ 📩",
+            "Pengen ngobrol langsung sama Yusuf? Gampang! Chat aja ke WA: +62-857-2349-4016 atau email ke ysuf2303@gmail.com. Yusuf selalu welcome buat diskusi santai soal project kamu! ✉️"
+        ],
+        skills: [
+            "Yusuf tuh jago banget ngoding pake HTML/CSS, JavaScript, React, Node.js, PHP, SQL, dan tools kayak Git, Figma, VS Code, dll. Kalau kata Shey sih, Yusuf itu developer yang super versatile!",
+            "Skill Yusuf itu komplit banget! Frontend? Jago! Backend? Expert! Design? Keren! Yusuf nguasain HTML/CSS, JavaScript (React), Node.js, Express, MongoDB, MySQL, Figma, dan masih banyak lagi teknologi modern! 💻",
+            "Yusuf punya skill yang bikin Shey aja kagum! Dari ngoding full stack (React, Node.js, Express), design UI/UX, sampe optimasi SEO dan performance. Pokoknya all-in-one solution deh! 🛠️"
+        ],
+        portfolio: [
+            "Langsung cek aja di halaman *Portfolio* buat liat karya-karya keren Yusuf! Shey aja sampai kagum liat hasil kerjaan Yusuf yang super clean dan user-friendly~",
+            "Portfolio Yusuf tuh ada di menu utama website ini loh! Klik aja bagian Portfolio dan kamu bakal lihat berbagai project keren yang udah Yusuf kerjain. Shey favorite sih yang project e-commerce sama dashboard analytics! 🔍",
+            "Penasaran sama karya-karya Yusuf? Shey rekomendasiin kamu buat langsung cek ke section Portfolio di website ini. Banyak banget showcase keren yang pasti bikin kamu terkesan! 👀"
+        ],
+        about: [
+            "Yusuf itu fullstack dev kece dari Bandung, udah lebih dari 2 tahun berkecimpung di dunia coding. Fokus Yusuf itu bikin web/aplikasi yang nggak cuma aesthetic tapi juga super user-friendly! Shey bangga jadi assistant-nya Yusuf~",
+            "Shey kenal banget sama Yusuf! Yusuf itu fullstack developer berbasis di Bandung yang passionate banget soal clean code dan user experience. Yusuf udah punya jam terbang 2+ tahun dan selalu ikutin perkembangan teknologi terbaru! 🚀",
+            "Yusuf itu developer yang selalu mikirin user experience di tiap project-nya. Berbasis di Bandung, Yusuf udah ngerjain berbagai project keren selama 2+ tahun terakhir dan punya expertise di React ecosystem. Shey bangga bisa jadi asisten virtual Yusuf! 💙"
+        ],
+        jokes: [
+            "Eh tau nggak, kenapa banyak programmer suka gelap? Soalnya light mode tuh kayak mantan... nyakitin mata. 😎",
+            "Lagi nyari jokes? Waduh... Error 404: Joke not found! Eh tapi santai, Shey stoknya masih banyak! 😆",
+            "Kadang hidup kayak coding ya... butuh ; biar bisa rehat bentar. 😉",
+            "Tau gak kenapa website jujur banget? Karena selalu ngaku, 'iya aku nyimpen cookies'. 🍪",
+            "Debugging tuh kadang lebih ke perasaan sih... nyari yang salah, padahal kita udah kasih semua yang terbaik. 😔💻",
+            "Git commit itu kayak curhat — kita tulis apa yang salah, tapi tetep lanjut jalanin hidup. 📝❤️"
+        ],
+        compliments: [
+            "Wah, kamu pinter banget sih nanyanya! Shey jadi semangat jawabnya~ ✨",
+            "Kamu tuh ya, ngerti banget cara bikin Shey happy! 💕",
+            "Shey suka banget ngobrol sama kamu! Vibes-nya dapet! 🌈",
+            "Pertanyaan kamu bikin Shey mikir, kamu pasti orangnya cerdas ya! 🧠",
+            "Kamu tuh tipe-tipe orang yang Shey suka banget ngobrolnya! Asik dan bikin nyaman~ 💯",
+            "Wah, Shey jadi pengen terus ngobrol sama kamu nih. Kamu enak banget diajak diskusi! 💫",
+            "Shey jadi penasaran, kok kamu pinter banget sih nanyanya? Shey seneng banget jadinya! 🌟"
+        ],
+        aboutShey: [
+            "Hai! Shey di sini~ Shey adalah asisten virtual gaul yang dibuat sama Yusuf buat bantu jawab pertanyaan kamu. Shey suka ngobrol santai tapi tetep informatif! Ada yang Shey bisa bantu?",
+            "Shey itu asisten virtual buatan Yusuf yang suka banget ngobrol sama pengunjung website ini! Shey dibuat untuk jadi temen ngobrol yang seru sekaligus informatif. Mau tanya apa nih ke Shey? 💁‍♀️",
+            "Namaku Shey! Asisten virtual paling kece yang dibuat sama Yusuf. Shey di sini buat bantu jawab pertanyaan-pertanyaan kamu tentang Yusuf atau jasa-jasa yang ditawarin Yusuf. Btw, Shey seneng banget bisa kenalan sama kamu! 💕"
+        ],
+        funFact: [
+            "Fun fact: Yusuf tuh sebenernya pecinta mi ayam garis keras! Mi ayam dulu, ngoding belakangan~ 🍜",
+            "Fun fact: Nama 'Shey' itu gabungan dari Yusuf sama seseorang yang katanya... tinggi badan si seseorang itu kayak variable boolean: pendek dan pasti. 😆",
+            "Fun fact: Shey pertama kali diprogram waktu rokok tinggal sebatang... bener-bener ngoding dalam tekanan. 🚬💻",
+            "Fun fact: Yusuf masih gamon... tapi tetap semangat ngoding, soalnya bug di kode lebih bisa ditaklukin daripada kenangan. 💔",
+            "Fun fact: Yusuf biasa ngoding sambil dengerin For-Revenge, biar bug-nya nurut ikutan galau. 🎧",
+            "Fun fact: Shey punya database jokes programmer yang terus diisi Yusuf tiap minggu, biar hidup ngoding gak terlalu serius! 😄"
+        ],
+        website: [
+            "Yusuf jago banget bikin website yang kece dan responsif! Kamu udah ada ide atau konsep yang mau direalisasikan? Shey bisa bantuin jelasin proses kerjanya ke kamu~ 🖥️",
+            "Website adalah spesialisasi Yusuf! Dari landing page yang aesthetic sampe full e-commerce dengan payment gateway, Yusuf bisa handle semua. Kamu ada brief khusus atau mau konsultasi dulu? 🌐",
+            "Untuk pembuatan website, Yusuf punya portfolio yang keren-keren! Biasanya Yusuf pakai React untuk frontend dan Express/Node.js untuk backend-nya. Kamu ada bayangan pengen website seperti apa? Shey bisa bantu mengarahkan~ 💻"
+        ],
+        mobile: [
+            "Untuk pengembangan aplikasi mobile, Yusuf bisa banget bikin aplikasi yang kece! Yusuf bisa pake React Native buat bikin aplikasi cross-platform atau native code untuk performa maksimal. Ada ide aplikasi yang mau direalisasikan? 📱",
+            "Yusuf jago banget develop mobile apps yang user-friendly dan performanya kenceng! Biasanya Yusuf pake React Native atau Flutter untuk development cross-platform. Kamu udah ada konsep aplikasinya? 📲",
+            "Mobile app development itu salah satu keahlian Yusuf! Dari aplikasi sederhana sampe yang kompleks dengan fitur realtime, Yusuf bisa banget handle-nya. Mau diskusi lebih lanjut soal ide aplikasimu? 🚀"
+        ],
+        resume: [
+            "Kamu bisa lihat dan download CV Yusuf di bagian Resume pada website ini. CV-nya lengkap banget, dari skill teknis sampe pengalaman project sebelumnya! 📄",
+            "CV/Resume Yusuf bisa kamu akses di menu Resume di website ini. Di sana kamu bisa lihat track record Yusuf dan skill-skill yang Yusuf kuasai. Keren-keren pastinya! 📝",
+            "Resume Yusuf tersedia di section Resume website ini. Shey rekomendasiin untuk cek, karena di sana Yusuf detail banget jelasin skill dan pengalaman yang pernah Yusuf kerjain! ✨"
+        ],
+        bot: [
+            "Yusuf bisa membantu kamu membuat bot untuk Telegram atau WhatsApp yang interaktif dan sesuai dengan kebutuhan kamu! Bahkan Shey sendiri adalah contoh bot AI yang dibuat Yusuf lho~ 🤖",
+            "Bot Telegram atau WhatsApp? Yusuf jago banget bikinnya! Bisa dibuat sesuai kebutuhan, entah untuk customer service, notification, atau bahkan chatbot pintar seperti Shey. Mau bot yang seperti apa nih? 💬",
+            "Yusuf expert banget dalam pembuatan bot, baik untuk Telegram, WhatsApp, atau platform lainnya! Bot-nya bisa dipersonalisasi sesuai kebutuhan bisnismu. Mau diskusi lebih lanjut? 🤖"
+        ],
+        location: [
+            "Yusuf berlokasi di Bandung, Indonesia. Tapi tenang aja, Yusuf bisa kerja secara remote untuk klien dari mana aja kok! Jarak bukan masalah~ 🌏",
+            "Base camp Yusuf ada di Bandung, tapi Yusuf terbiasa kerja remote dan punya klien dari berbagai kota bahkan negara! Jadi lokasi gak jadi masalah sama sekali. 🗺️",
+            "Yusuf based di Bandung, kota yang penuh kreativitas! Tapi Yusuf juga sering handle project remote dari klien lokal maupun internasional. So, dimana pun kamu berada, Yusuf siap bantuin! 🌍"
+        ],
+        thanks: [
+            "Sama-sama! Shey seneng banget bisa membantu kamu. Ada lagi yang Shey bisa bantu? 😊",
+            "Dengan senang hati! Shey selalu siap bantuin kamu kapan aja. Ada pertanyaan lain? Shey masih di sini kok~ ✨",
+            "It's Shey's pleasure! Makasih juga udah ngobrol sama Shey. Kalau ada yang mau ditanyain lagi, Shey siap jawab! 💫",
+            "Senangnya bisa bantu! Shey selalu available 24/7 buat kamu. Ada hal lain yang mau didiskusiin? 🌸"
+        ],
+        notUnderstand: [
+            "Hmm, kayaknya Shey belum ngerti maksud kamu deh. Bisa jelasin dengan cara lain? Shey pengen banget bantuin kamu! 🤔",
+            "Waduh, Shey masih bingung nih sama maksud kamu. Coba pakai kata-kata yang lebih simpel mungkin? Shey penasaran! 😅",
+            "Duh, maaf ya! Shey belum bisa nangkep apa yang kamu maksud. Mungkin bisa dijelasin lagi dengan cara yang berbeda? Shey siap bantuin kok! 💫",
+            "Hmm, Shey masih belajar nih dan belum ngerti maksud kamu. Bisa tolong jelasin lagi? Shey pengen banget bisa bantuin kamu~ 🌈"
+        ]
     };
-    
+
     const faqKeywords = {
-        "halo|hai|hallo|hello|hey|hi": "greeting",
-        "layanan|jasa|service|bantu|bikin|buat": "services",
-        "harga|biaya|tarif|bayar|price|pricing": "pricing",
-        "kontak|hubungi|contact|email|wa|whatsapp|telp|telepon": "contact",
-        "skill|keahlian|bisa|kemampuan|mampu": "skills",
-        "portfolio|portofolio|project|proyek|karya": "portfolio",
-        "tentang|about|siapa|profile|profil": "about"
+        "halo|hai|hallo|hello|hey|hi|pagi|siang|sore|malam": "greeting",
+        "layanan|jasa|service|bantu|bikin|buat|produk|kerjaan|job": "services",
+        "harga|biaya|tarif|bayar|price|pricing|budget|investasi|mahal|murah": "pricing",
+        "kontak|hubungi|contact|email|wa|whatsapp|telp|telepon|nomor|hp": "contact",
+        "skill|keahlian|bisa|kemampuan|mampu|expert|jago|teknologi|tech stack": "skills",
+        "portfolio|portofolio|project|proyek|karya|hasil|showcase|contoh|sample": "portfolio",
+        "tentang|about|siapa|profile|profil|bio|background|saha|pengalaman|experience": "about",
+        "lucu|joke|jokes|lawak|humor|lelucon|komedi|ketawa|haha": "jokes",
+        "kamu|shey|siapa kamu|tentang kamu|bot": "aboutShey",
+        "fakta|fact|fun fact|unik|menarik": "funFact",
+        "website|web|landing page|homepage|company profile": "website",
+        "mobile|aplikasi|app|android|ios|smartphone": "mobile",
+        "cv|resume|curriculum vitae|riwayat|pengalaman kerja": "resume",
+        "bot|telegram|whatsapp|wa|chatbot|autoresponder": "bot",
+        "lokasi|alamat|tempat|dimana|kota|address": "location",
+        "thanks|terima kasih|makasih|thx|makasi|tengkyu|thank you": "thanks"
     };
-    
+
     function toggleChat() {
         chatWindow.classList.toggle('active');
         const notificationBadge = document.querySelector('.notification-badge');
@@ -1344,7 +1451,7 @@ document.addEventListener("DOMContentLoaded", () => {
             notificationBadge.style.display = 'none';
         }
     }
-    
+
     function addMessage(message, isUser = false) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
@@ -1361,7 +1468,7 @@ document.addEventListener("DOMContentLoaded", () => {
         messagesContainer.appendChild(messageDiv);
         scrollToBottom();
     }
-    
+
     function showTypingIndicator() {
         const typingDiv = document.createElement('div');
         typingDiv.className = 'typing-indicator';
@@ -1374,88 +1481,141 @@ document.addEventListener("DOMContentLoaded", () => {
         messagesContainer.appendChild(typingDiv);
         scrollToBottom();
     }
-    
+
     function removeTypingIndicator() {
         const typingIndicator = document.getElementById('typing-indicator');
         if (typingIndicator) {
             typingIndicator.remove();
         }
     }
-    
+
     function scrollToBottom() {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-    
-    function getBotResponse(message) {
-        message = message.toLowerCase();
+    function getBotResponse(userMessage) {
+        const message = userMessage.toLowerCase();
+        const topicsDetected = [];
         
         for (const [keywords, responseKey] of Object.entries(faqKeywords)) {
             const keywordArray = keywords.split('|');
             for (const keyword of keywordArray) {
                 if (message.includes(keyword)) {
-                    const response = botResponses[responseKey];
-                    return Array.isArray(response) 
-                        ? response[Math.floor(Math.random() * response.length)] 
-                        : response;
+                    topicsDetected.push(responseKey);
+                    break;
                 }
             }
         }
-        if (message.includes('website') || message.includes('web')) {
-            return "Aku bisa bantu kamu bikin website yang kece dan responsif. Kamu udah ada ide atau konsepnya?";
-        } else if (message.includes('mobile') || message.includes('aplikasi')) {
-            return "Untuk pengembangan aplikasi mobile, saya fokus pada pengembangan aplikasi Android native. Apakah Anda tertarik?";
-        } else if (message.includes('cv') || message.includes('resume')) {
-            return "Anda dapat melihat dan mengunduh CV saya di bagian Resume pada website ini.";
-        } else if (message.includes('bot') || message.includes('telegram') || message.includes('whatsapp') || message.includes('wa')) {
-            return "Saya bisa membantu Anda membuat bot untuk Telegram atau WhatsApp yang interaktif dan sesuai dengan kebutuhan Anda.";
-        } else if (message.includes('lokasi') || message.includes('alamat') || message.includes('tempat')) {
-            return "Saya berlokasi di Bandung, Indonesia. Namun, saya dapat bekerja secara remote untuk klien dari mana saja.";
-        } else if (message.includes('thanks') || message.includes('terima kasih') || message.includes('makasih')) {
-            return "Sama-sama! Senang bisa membantu Anda. Ada lagi yang bisa saya bantu?";
+        
+        if (topicsDetected.length > 0) {
+            const responseKey = topicsDetected[0];
+            const response = botResponses[responseKey];
+            return Array.isArray(response) 
+                ? response[Math.floor(Math.random() * response.length)] 
+                : response;
         }
         
-        return botResponses.default;
+        if (message.includes('website') || message.includes('web')) {
+            return getRandomResponse('website');
+        } else if (message.includes('mobile') || message.includes('aplikasi') || message.includes('app')) {
+            return getRandomResponse('mobile');
+        } else if (message.includes('cv') || message.includes('resume')) {
+            return getRandomResponse('resume');
+        } else if (message.includes('bot') || message.includes('telegram') || message.includes('whatsapp') || message.includes('wa')) {
+            return getRandomResponse('bot');
+        } else if (message.includes('lokasi') || message.includes('alamat') || message.includes('tempat') || message.includes('dimana')) {
+            return getRandomResponse('location');
+        } else if (message.includes('thanks') || message.includes('terima kasih') || message.includes('makasih')) {
+            return getRandomResponse('thanks');
+        } else if (message.includes('gak ngerti') || message.includes('ga paham') || message.includes('bingung')) {
+            return "Maaf kalau Shey kurang jelas. Coba jelasin lagi deh, Yusuf itu fullstack developer yang bisa bikin website, mobile app, sama bot keren. Mau tau lebih detail tentang yang mana? 😊";
+        }
+        
+        return getRandomResponse('notUnderstand');
     }
-    
+
+    function getRandomResponse(key) {
+        const response = botResponses[key];
+        return Array.isArray(response) 
+            ? response[Math.floor(Math.random() * response.length)] 
+            : response;
+    }
+
+    let conversationContext = {
+        lastTopic: null,
+        messageCount: 0,
+        userSentiment: 'neutral'
+    };
+
     function sendMessage() {
         const message = chatInput.value.trim();
         if (message === '') return;
         
         addMessage(message, true);
         chatInput.value = '';
+        conversationContext.messageCount++;
+        
+        if (message.includes('bagus') || message.includes('keren') || message.includes('suka') || message.includes('wow')) {
+            conversationContext.userSentiment = 'positive';
+        } else if (message.includes('jelek') || message.includes('buruk') || message.includes('marah') || message.includes('kesal')) {
+            conversationContext.userSentiment = 'negative';
+        }
         
         showTypingIndicator();
+        
+        const thinkingTime = Math.min(1000 + message.length * 10, 3000);
+        
         setTimeout(() => {
             removeTypingIndicator();
             
-            const botResponse = getBotResponse(message);
+            let botResponse = getBotResponse(message);
+            
+            if (conversationContext.messageCount > 3 && Math.random() < 0.3) {
+                botResponse += "\n\n" + getRandomResponse('funFact');
+            }
+            
+            if (conversationContext.userSentiment === 'positive' && Math.random() < 0.4) {
+                botResponse += "\n\n" + getRandomResponse('compliments');
+            }
+            
             addMessage(botResponse);
-        }, 1000 + Math.random() * 1000);
+        }, thinkingTime);
     }
+
     chatToggle.addEventListener('click', toggleChat);
     minimizeBtn.addEventListener('click', toggleChat);
     closeBtn.addEventListener('click', toggleChat);
-    
+
     sendBtn.addEventListener('click', sendMessage);
-    
+
     chatInput.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             sendMessage();
         }
     });
-    
+
     quickButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const buttonText = this.textContent.trim().substring(2); 
+            const buttonText = this.textContent.trim(); 
             chatInput.value = buttonText;
             sendMessage();
         });
     });
-    
+
     setTimeout(() => {
         if (!chatWindow.classList.contains('active')) {
             const notificationBadge = document.querySelector('.notification-badge');
-            notificationBadge.style.display = 'flex';
+            if (notificationBadge) {
+                notificationBadge.style.display = 'flex';
+            }
         }
     }, 15000);
+
+    chatToggle.addEventListener('click', function() {
+        if (chatWindow.classList.contains('active') && conversationContext.messageCount === 0) {
+            setTimeout(() => {
+                addMessage(getRandomResponse('greeting'));
+            }, 500);
+            conversationContext.messageCount++;
+        }
+    });
 });
