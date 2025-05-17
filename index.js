@@ -1301,4 +1301,161 @@ document.addEventListener("DOMContentLoaded", () => {
         robotRenderer.render(robotScene, robotCamera);
     }
     window.addEventListener('load', initRobot3D);
+
+
+    const chatToggle = document.querySelector('.chat-bot-toggle');
+    const chatWindow = document.querySelector('.chat-bot-window');
+    const minimizeBtn = document.querySelector('.minimize-btn');
+    const closeBtn = document.querySelector('.close-btn');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.querySelector('.send-btn');
+    const messagesContainer = document.querySelector('.chat-bot-messages');
+    const quickButtons = document.querySelectorAll('.quick-btn');
+    
+    const botResponses = {
+        default: "Hmm, maaf aku belum ngerti maksudnya. Bisa dijelasin lagi nggak? 😊",
+        greeting: [
+            "Haii! 👋 Gimana kabarnya hari ini?",
+            "Halo! Ada yang bisa aku bantuin?",
+            "Wah, seneng banget kamu mampir! 😄"
+        ],
+        services: "Aku bisa bantu bikin website, desain UI/UX, aplikasi mobile, bot Telegram & WA, dan lainnya. Mau ngobrolin yang mana dulu nih?",
+        pricing: "Soal harga fleksibel kok, tergantung kebutuhan kamu. Kalau mau detail, boleh banget chat aku langsung di WA yaa~",
+        contact: "Kamu bisa hubungi aku lewat email: ysuf2303@gmail.com atau WA: +62-857-2349-4016. Feel free buat nanya-nanya aja dulu ya!",
+        skills: "Aku biasa ngoding pake HTML/CSS, JavaScript, React, Node.js, PHP, SQL, dan tools kayak Git, Figma, VS Code, dll.",
+        portfolio: "Langsung cek aja di halaman *Portfolio*, di situ ada beberapa karya dan project yang udah aku kerjain.",
+        about: "Aku fullstack dev dari Bandung, udah ngoding-ngodingan lebih dari 2 tahun. Fokusku bikin web/aplikasi yang kece dan gampang dipake!"
+    };
+    
+    const faqKeywords = {
+        "halo|hai|hallo|hello|hey|hi": "greeting",
+        "layanan|jasa|service|bantu|bikin|buat": "services",
+        "harga|biaya|tarif|bayar|price|pricing": "pricing",
+        "kontak|hubungi|contact|email|wa|whatsapp|telp|telepon": "contact",
+        "skill|keahlian|bisa|kemampuan|mampu": "skills",
+        "portfolio|portofolio|project|proyek|karya": "portfolio",
+        "tentang|about|siapa|profile|profil": "about"
+    };
+    
+    function toggleChat() {
+        chatWindow.classList.toggle('active');
+        const notificationBadge = document.querySelector('.notification-badge');
+        if (notificationBadge) {
+            notificationBadge.style.display = 'none';
+        }
+    }
+    
+    function addMessage(message, isUser = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+        
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        messageDiv.innerHTML = `
+            <div class="message-content">
+                <p>${message}</p>
+                <span class="message-time">${time}</span>
+            </div>
+        `;
+        
+        messagesContainer.appendChild(messageDiv);
+        scrollToBottom();
+    }
+    
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'typing-indicator';
+        typingDiv.innerHTML = `
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        `;
+        typingDiv.id = 'typing-indicator';
+        messagesContainer.appendChild(typingDiv);
+        scrollToBottom();
+    }
+    
+    function removeTypingIndicator() {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+    
+    function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+    
+    function getBotResponse(message) {
+        message = message.toLowerCase();
+        
+        for (const [keywords, responseKey] of Object.entries(faqKeywords)) {
+            const keywordArray = keywords.split('|');
+            for (const keyword of keywordArray) {
+                if (message.includes(keyword)) {
+                    const response = botResponses[responseKey];
+                    return Array.isArray(response) 
+                        ? response[Math.floor(Math.random() * response.length)] 
+                        : response;
+                }
+            }
+        }
+        if (message.includes('website') || message.includes('web')) {
+            return "Aku bisa bantu kamu bikin website yang kece dan responsif. Kamu udah ada ide atau konsepnya?";
+        } else if (message.includes('mobile') || message.includes('aplikasi')) {
+            return "Untuk pengembangan aplikasi mobile, saya fokus pada pengembangan aplikasi Android native. Apakah Anda tertarik?";
+        } else if (message.includes('cv') || message.includes('resume')) {
+            return "Anda dapat melihat dan mengunduh CV saya di bagian Resume pada website ini.";
+        } else if (message.includes('bot') || message.includes('telegram') || message.includes('whatsapp') || message.includes('wa')) {
+            return "Saya bisa membantu Anda membuat bot untuk Telegram atau WhatsApp yang interaktif dan sesuai dengan kebutuhan Anda.";
+        } else if (message.includes('lokasi') || message.includes('alamat') || message.includes('tempat')) {
+            return "Saya berlokasi di Bandung, Indonesia. Namun, saya dapat bekerja secara remote untuk klien dari mana saja.";
+        } else if (message.includes('thanks') || message.includes('terima kasih') || message.includes('makasih')) {
+            return "Sama-sama! Senang bisa membantu Anda. Ada lagi yang bisa saya bantu?";
+        }
+        
+        return botResponses.default;
+    }
+    
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message === '') return;
+        
+        addMessage(message, true);
+        chatInput.value = '';
+        
+        showTypingIndicator();
+        setTimeout(() => {
+            removeTypingIndicator();
+            
+            const botResponse = getBotResponse(message);
+            addMessage(botResponse);
+        }, 1000 + Math.random() * 1000);
+    }
+    chatToggle.addEventListener('click', toggleChat);
+    minimizeBtn.addEventListener('click', toggleChat);
+    closeBtn.addEventListener('click', toggleChat);
+    
+    sendBtn.addEventListener('click', sendMessage);
+    
+    chatInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+    
+    quickButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const buttonText = this.textContent.trim().substring(2); 
+            chatInput.value = buttonText;
+            sendMessage();
+        });
+    });
+    
+    setTimeout(() => {
+        if (!chatWindow.classList.contains('active')) {
+            const notificationBadge = document.querySelector('.notification-badge');
+            notificationBadge.style.display = 'flex';
+        }
+    }, 15000);
 });
