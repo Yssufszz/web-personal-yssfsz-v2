@@ -2265,7 +2265,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
     position: relative;
 }
 
-/* Tambahan animasi untuk efek futuristik */
 @keyframes scanline {
     0% {
         transform: translateY(-100%);
@@ -2292,7 +2291,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
     z-index: 5;
 }
 
-/* Responsive styles */
 @media (max-width: 480px) {
     .chat-bot-window {
         width: 320px;

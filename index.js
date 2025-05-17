@@ -500,8 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orbitSpeed: 0.04
                 }
             ];
-
-            // Create planets and their orbits
+            
             const planets = [];
             const planetDetails = document.getElementById('planet-details');
             const orbits = [];
