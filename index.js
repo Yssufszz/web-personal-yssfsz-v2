@@ -358,15 +358,15 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Planet textures
             const textures = {
-                sun: '/api/placeholder/200/200',
-                mercury: '/api/placeholder/200/200',
-                venus: '/api/placeholder/200/200',
-                earth: '/api/placeholder/200/200',
-                mars: '/api/placeholder/200/200',
-                jupiter: '/api/placeholder/200/200',
-                saturn: '/api/placeholder/200/200',
-                uranus: '/api/placeholder/200/200',
-                neptune: '/api/placeholder/200/200',
+                sun: 'https://i.ibb.co/FgPG2JQ/sun.jpg',
+                mercury: 'https://i.ibb.co/Xspz9xn/mercury.jpg',
+                venus: 'https://i.ibb.co/nMXpF2J/venus.jpg',
+                earth: 'https://i.ibb.co/8csKbHS/earth.jpg',
+                mars: 'https://i.ibb.co/PQ0kvB2/mars.jpg',
+                jupiter: 'https://i.ibb.co/B4hJxjC/jupiter.jpg',
+                saturn: 'https://i.ibb.co/dM2gVKF/saturn.jpg',
+                uranus: 'https://i.ibb.co/6nZhsnM/uranus.jpg',
+                neptune: 'https://i.ibb.co/dLJr9yC/neptune.jpg',
             };
             
             // Try to load sun texture
@@ -378,10 +378,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 sunTexture = null;
             }
             
-            // Sun material
+            // Sun material with emission
             const sunMaterial = new THREE.MeshBasicMaterial({
                 map: sunTexture || null,
-                color: sunTexture ? 0xffffff : 0xffcc33
+                color: sunTexture ? 0xffffff : 0xffcc33,
+                emissive: 0xffaa00,
+                emissiveIntensity: 1
             });
                     
             const sun = new THREE.Mesh(sunGeometry, sunMaterial);
@@ -389,10 +391,35 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Add sun glow effect
             const sunGlowGeometry = new THREE.SphereGeometry(3.2, 32, 32);
-            const sunGlowMaterial = new THREE.MeshBasicMaterial({
-                color: 0xffaa00,
-                transparent: true,
-                opacity: 0.3
+            const sunGlowMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    c: { type: "f", value: 0.5 },
+                    p: { type: "f", value: 3.0 },
+                    glowColor: { type: "c", value: new THREE.Color(0xffaa00) },
+                    viewVector: { type: "v3", value: camera.position }
+                },
+                vertexShader: `
+                    uniform vec3 viewVector;
+                    varying float intensity;
+                    void main() {
+                        vec3 vNormal = normalize(normal);
+                        vec3 vNormel = normalize(viewVector);
+                        intensity = pow(0.6 - dot(vNormal, vNormel), 1.5);
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform vec3 glowColor;
+                    varying float intensity;
+                    void main() 
+                    {
+                        vec3 glow = glowColor * intensity;
+                        gl_FragColor = vec4(glow, 1.0);
+                    }
+                `,
+                side: THREE.BackSide,
+                blending: THREE.AdditiveBlending,
+                transparent: true
             });
 
             const sunGlow = new THREE.Mesh(sunGlowGeometry, sunGlowMaterial);
@@ -533,8 +560,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 planet.castShadow = true;
                 planet.receiveShadow = true;
                 planet.userData = { info: info };
-                
-                // Initial position
                 const angle = Math.random() * Math.PI * 2;
                 planet.position.x = Math.cos(angle) * info.orbitRadius;
                 planet.position.z = Math.sin(angle) * info.orbitRadius;
@@ -542,7 +567,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 planets.push(planet);
                 scene.add(planet);
                 
-                // Add Saturn's rings
                 if (info.name === "Saturnus") {
                     const innerRadius = info.size * 0.5;
                     const outerRadius = info.size * 0.9;
@@ -736,7 +760,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 stars.rotation.y += 0.0001;
                 
                 // Update sunGlow shader
-                sunGlow.rotation.y += 0.003;
+                sunGlow.material.uniforms.viewVector.value = new THREE.Vector3().subVectors(
+                    camera.position,
+                    sunGlow.position
+                );
                 
                 renderer.render(scene, camera);
             }
