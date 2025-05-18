@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yssfsz.vercel.app/sitemap.xml
